@@ -1,3 +1,3 @@
-import { log } from "node:console";
+import generateRSAKeyPair from "./utils/RSA_Key_Generation";
 
-log("TEST");
+generateRSAKeyPair();
