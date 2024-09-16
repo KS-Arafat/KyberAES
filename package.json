@@ -1,13 +1,12 @@
 {
-  "name": "aes_rsa_hybrid_encryption",
+  "name": "many_encryptions",
   "version": "1.0.0",
-  "description": "Hybrid Encryption using AES and RSA",
+  "description": "Testing Different Type of Encryptions. Post Quantum Encryption(PQR) included.",
   "main": "index.ts",
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "ts-node src/index.ts",
-    "bug": "node --trace-gc --inspect ./dist/index.js"
+    "dev": "ts-node src/index.ts"
   },
   "keywords": [],
   "author": "",
@@ -16,5 +15,8 @@
     "@types/node": "^22.5.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.2"
+  },
+  "dependencies": {
+    "mlkem": "^2.0.0"
   }
 }
