@@ -1,12 +1,60 @@
 import { MlKem1024 } from "mlkem";
-import { createCipheriv, createDecipheriv } from "node:crypto";
+import { createCipheriv, createDecipheriv, randomBytes } from "node:crypto";
 
-class Recipient_instance {
+class AES_engine {
+	protected get_skR = () => randomBytes(32);
+
+	public send_msg = (plaintext: string) => {
+		try {
+			if (!plaintext) throw new Error("No plaintext provided");
+			const iv = randomBytes(16);
+			const cipher = createCipheriv("aes-256-gcm", this.get_skR(), iv);
+
+			let encrypted = cipher.update(plaintext, "utf-8", "hex");
+			encrypted += cipher.final("hex");
+			const tag = cipher.getAuthTag();
+			// Encrypted:TAG:IV
+			encrypted = `${encrypted}:${tag.toString("hex")}:${iv.toString("hex")}`;
+
+			return encrypted;
+		} catch (e) {
+			console.log(e);
+		}
+	};
+
+	public receive_msg = (mixedHex: string) => {
+		try {
+			const splited = mixedHex.split(":");
+
+			const encrypted = splited[0];
+			const tag_h = splited[1];
+			const iv_h = splited[2];
+
+			if (!(iv_h && tag_h && encrypted)) throw new Error("Error in Splitting");
+
+			const iv_b = Buffer.from(iv_h, "hex");
+			const tag_b = Buffer.from(tag_h, "hex");
+
+			const decipher = createDecipheriv("aes-256-gcm", this.get_skR(), iv_b);
+
+			let decrypted = "";
+			decipher.setAuthTag(tag_b);
+			decrypted += decipher.update(encrypted, "hex", "utf-8");
+			decrypted += decipher.final("utf-8");
+
+			return decrypted;
+		} catch (err) {
+			console.error("Decryption error: ", err);
+		}
+	};
+}
+
+class Recipient_instance extends AES_engine {
 	private CK_engine = new MlKem1024();
 
 	private myPkR!: Uint8Array;
 	private mySkR!: Uint8Array;
-	public ssR!: Uint8Array;
+	private ssR!: Uint8Array;
 
 	private Init = false;
 
@@ -53,13 +101,15 @@ class Recipient_instance {
 			`\nssR: ${!this.ssR || this.ssR.length === 0 ? "Bad" : "Good"}\t${loc}`
 		);
 	};
+
+	protected get_skR = () => Buffer.from(this.ssR);
 }
 
-class Sender_instance {
+class Sender_instance extends AES_engine {
 	private CK_engine = new MlKem1024();
 
 	private CT!: Uint8Array;
-	public ssS!: Uint8Array;
+	private ssS!: Uint8Array;
 
 	private Init = false;
 
@@ -82,6 +132,8 @@ class Sender_instance {
 		this.initCheck();
 		return this.CT;
 	};
+
+	protected get_skR = () => Buffer.from(this.ssS);
 }
 
 export { Recipient_instance, Sender_instance };

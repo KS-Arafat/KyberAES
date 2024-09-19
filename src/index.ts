@@ -3,16 +3,22 @@ import { Recipient_instance, Sender_instance } from "./utils/Kyber_AES";
 
 (async () => {
 	const recipient = new Recipient_instance();
-	await recipient.init();
-	const pkr = recipient.sharePublicRing();
-
 	const sender = new Sender_instance();
-	await sender.init(pkr);
-	const ct = sender.share_CT();
 
-	await recipient.set_CT(ct);
+	await recipient.init();
 
-	log(areUint8ArraysEqual(recipient.ssR, sender.ssS));
+	await sender.init(recipient.sharePublicRing());
+	await recipient.set_CT(sender.share_CT());
+
+	const encrypted_1 = sender.send_msg("Sender: Ola Ur Code is 💩");
+	if (encrypted_1) log(recipient.receive_msg(encrypted_1));
+
+	const encrypted_2 = sender.send_msg("Recipient: Yo, Who tf r u 🤬");
+	if (encrypted_2) log(recipient.receive_msg(encrypted_2));
+
+	/*
+	 *
+	 */
 })();
 
 function areUint8ArraysEqual(arr1: Uint8Array, arr2: Uint8Array): boolean {
