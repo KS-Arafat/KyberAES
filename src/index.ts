@@ -13,8 +13,8 @@ import { Recipient_instance, Sender_instance } from "./utils/Kyber_AES";
 	const encrypted_1 = sender.send_msg("Sender: Ola Ur Code is 💩");
 	if (encrypted_1) log(recipient.receive_msg(encrypted_1));
 
-	const encrypted_2 = sender.send_msg("Recipient: Yo, Who tf r u 🤬");
-	if (encrypted_2) log(recipient.receive_msg(encrypted_2));
+	const encrypted_2 = recipient.send_msg("Recipient: Yo, Who tf r u 🤬");
+	if (encrypted_2) log(sender.receive_msg(encrypted_2));
 
 	/*
 	 *
