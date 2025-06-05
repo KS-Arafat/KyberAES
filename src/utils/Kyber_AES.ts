@@ -2,13 +2,17 @@ import { MlKem1024 } from "mlkem";
 import { createCipheriv, createDecipheriv, randomBytes } from "node:crypto";
 
 class AES_engine {
-	protected get_skR = () => randomBytes(32);
+	protected get_skR = () => new Uint8Array(randomBytes(32));
 
 	public send_msg = (plaintext: string) => {
 		try {
 			if (!plaintext) throw new Error("No plaintext provided");
 			const iv = randomBytes(16);
-			const cipher = createCipheriv("aes-256-gcm", this.get_skR(), iv);
+			const cipher = createCipheriv(
+				"aes-256-gcm",
+				this.get_skR(),
+				new Uint8Array(iv)
+			);
 
 			let encrypted = cipher.update(plaintext, "utf-8", "hex");
 			encrypted += cipher.final("hex");
@@ -35,10 +39,16 @@ class AES_engine {
 			const iv_b = Buffer.from(iv_h, "hex");
 			const tag_b = Buffer.from(tag_h, "hex");
 
-			const decipher = createDecipheriv("aes-256-gcm", this.get_skR(), iv_b);
+			const decipher = createDecipheriv(
+				"aes-256-gcm",
+				this.get_skR(),
+				new Uint8Array(iv_b)
+			);
 
 			let decrypted = "";
-			decipher.setAuthTag(tag_b);
+			decipher.setAuthTag(
+				new Uint8Array(tag_b.buffer, tag_b.byteOffset, tag_b.length)
+			);
 			decrypted += decipher.update(encrypted, "hex", "utf-8");
 			decrypted += decipher.final("utf-8");
 
@@ -102,7 +112,7 @@ class Recipient_instance extends AES_engine {
 		);
 	};
 
-	protected get_skR = () => Buffer.from(this.ssR);
+	protected get_skR = () => new Uint8Array(Buffer.from(this.ssR));
 }
 
 class Sender_instance extends AES_engine {
@@ -133,7 +143,7 @@ class Sender_instance extends AES_engine {
 		return this.CT;
 	};
 
-	protected get_skR = () => Buffer.from(this.ssS);
+	protected get_skR = () => new Uint8Array(Buffer.from(this.ssS));
 }
 
 export { Recipient_instance, Sender_instance };
