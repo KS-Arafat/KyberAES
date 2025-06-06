@@ -1,5 +1,5 @@
 import { MlKem1024 } from "mlkem";
-import { createCipheriv, createDecipheriv, randomBytes } from "node:crypto";
+import { createCipheriv, createDecipheriv, randomBytes } from "crypto";
 
 class AES_engine {
 	protected get_skR = () => new Uint8Array(randomBytes(32));

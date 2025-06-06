@@ -1,22 +1,19 @@
 {
   "name": "many_encryptions",
-  "version": "1.0.0",
-  "description": "Testing Different Type of Encryptions. Post Quantum Encryption(PQR) included.",
-  "main": "index.ts",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "build": "tsc",
-    "start": "node dist/index.js",
-    "dev": "ts-node src/index.ts"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
-    "@types/node": "^22.5.4",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.6.2"
+    "@types/node": "^22.15.29",
+    "typescript": "~5.8.3",
+    "vite": "^6.3.5"
   },
   "dependencies": {
-    "mlkem": "^2.0.0"
+    "mlkem": "^2.3.1"
   }
 }
