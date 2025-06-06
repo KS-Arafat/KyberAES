@@ -1,15 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Kyber AES Chat APP</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script src="https://cdn.tailwindcss.com" defer></script>
+	</head>
 
-<head>
-    <meta charset="UTF-8">
-    <title>Kyber AES Chat APP</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
+	<body
+		class="flex min-h-screen min-w-full flex-col items-start justify-start bg-gray-100"
+	>
+		<header
+			class="flex min-w-full items-center justify-center bg-blue-600 p-4 text-white underline"
+		>
+			<h1 class="text-2xl font-bold">Kyber AES Chat APP</h1>
+		</header>
 
-<body>
+		<div class="mt-10 flex w-full flex-col items-center">
+			<div
+				class="mt-auto flex w-full flex-row items-center justify-center p-4 md:w-5/6 lg:w-4/6"
+			>
+				<div class="flex h-fit w-[50dvw] flex-col items-center">
+					<textarea
+						readonly
+						id="getkey"
+						class="relative h-36 w-[80%] resize-none rounded-2xl border border-orange-500 p-3"
+					></textarea>
+					<button
+						id="getkeybtn"
+						class="mt-5 w-36 cursor-pointer rounded-2xl border p-1 px-2 transition-all hover:border-transparent hover:border-b-orange-100 hover:bg-orange-300 hover:text-white hover:shadow-2xl hover:shadow-amber-400"
+					>
+						Gen Key
+					</button>
+				</div>
+				<div class="flex h-fit w-[50dvw] flex-col items-center">
+					<textarea
+						id="setkey"
+						class="relative h-36 w-[80%] resize-none rounded-2xl border border-cyan-500 p-3"
+					></textarea>
+					<button
+						id="setkeybtn"
+						class="mt-5 w-36 cursor-pointer rounded-2xl border p-1 px-2 transition-all hover:border-transparent hover:border-b-blue-100 hover:bg-blue-300 hover:text-white hover:shadow-2xl hover:shadow-cyan-400"
+					>
+						Set Key
+					</button>
+				</div>
+			</div>
+		</div>
 
-</body>
-
+		<div
+			class="mx-auto mt-20 flex w-11/12 flex-col overflow-hidden rounded-2xl bg-white shadow-lg mb-5 md:w-5/6 lg:w-4/6"
+		>
+			<div
+				class="flex w-full items-center justify-center border-b bg-blue-50 px-4 py-3"
+			>
+				<span class="font-bold"> Chat Room </span>
+			</div>
+			<div
+				id="messages"
+				class="flex-1 space-y-3 overflow-y-auto px-4 py-4"
+				style="min-height: 300px; max-height: 400px"
+			>
+				<div class="flex flex-col items-start">
+					<div class="rounded-lg bg-gray-200 px-4 py-2 text-sm text-gray-800">
+						Hello! 👋
+					</div>
+					<span class="mt-1 text-xs text-gray-400">Alice · 10:00 AM</span>
+				</div>
+				<div class="flex flex-col items-end">
+					<div class="rounded-lg bg-blue-500 px-4 py-2 text-sm text-white">
+						Hi Alice!
+					</div>
+					<span class="mt-1 text-xs text-gray-400">You · 10:01 AM</span>
+				</div>
+			</div>
+			<div id="chat-form" class="flex items-center border-t px-4 py-3">
+				<input
+					id="chat-input"
+					type="text"
+					placeholder="Type your message..."
+					class="flex-1 rounded-full border px-4 py-2 text-sm focus:border-blue-400 focus:outline-none"
+					autocomplete="off"
+				/>
+				<button
+					type="submit"
+					class="ml-3 rounded-full bg-blue-500 px-4 py-2 text-white transition hover:bg-blue-600"
+				>
+					Send
+				</button>
+			</div>
+		</div>
+		<script type="module" src="/src/main.ts"></script>
+	</body>
 </html>
-</div>
