@@ -14,6 +14,9 @@
     "vite": "^6.3.5"
   },
   "dependencies": {
-    "mlkem": "^2.3.1"
+    "@tailwindcss/vite": "^4.1.8",
+    "mlkem": "^2.3.1",
+    "notyf": "^3.10.0",
+    "tailwindcss": "^4.1.8"
   }
 }
