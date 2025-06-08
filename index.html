@@ -4,7 +4,8 @@
 		<meta charset="UTF-8" />
 		<title>Kyber AES Chat APP</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<script src="https://cdn.tailwindcss.com" defer></script>
+		<link rel="icon" href="/favicon.ico" />
+		<link rel="stylesheet" href="/src/style.css" />
 	</head>
 
 	<body
@@ -20,7 +21,7 @@
 			<div
 				class="mt-auto flex w-full flex-row items-center justify-center p-4 md:w-5/6 lg:w-4/6"
 			>
-				<div class="flex h-fit w-[50dvw] flex-col items-center">
+				<div id="div_genkey" class="flex h-fit w-[50dvw] flex-col items-center">
 					<textarea
 						readonly
 						id="getkey"
@@ -33,7 +34,7 @@
 						Gen Key
 					</button>
 				</div>
-				<div class="flex h-fit w-[50dvw] flex-col items-center">
+				<div id="div_genct" class="flex h-fit w-[50dvw] flex-col items-center">
 					<textarea
 						id="setkey"
 						class="relative h-36 w-[80%] resize-none rounded-2xl border border-cyan-500 p-3"
@@ -45,11 +46,26 @@
 						Set Key
 					</button>
 				</div>
+				<div
+					id="div_setck"
+					class="hidden h-fit w-[50dvw] flex-col items-center"
+				>
+					<textarea
+						id="setct"
+						class="relative h-36 w-[80%] resize-none rounded-2xl border border-purple-500 p-3"
+					></textarea>
+					<button
+						id="setctbtn"
+						class="mt-5 w-36 cursor-pointer rounded-2xl border p-1 px-2 transition-all hover:border-transparent hover:border-b-purple-100 hover:bg-purple-300 hover:text-white hover:shadow-2xl hover:shadow-fuchsia-400"
+					>
+						Set CT
+					</button>
+				</div>
 			</div>
 		</div>
 
 		<div
-			class="mx-auto mt-20 flex w-11/12 flex-col overflow-hidden rounded-2xl bg-white shadow-lg mb-5 md:w-5/6 lg:w-4/6"
+			class="mx-auto mt-20 mb-5 flex w-11/12 flex-col overflow-hidden rounded-2xl bg-white shadow-lg md:w-5/6 lg:w-4/6"
 		>
 			<div
 				class="flex w-full items-center justify-center border-b bg-blue-50 px-4 py-3"
@@ -65,26 +81,30 @@
 					<div class="rounded-lg bg-gray-200 px-4 py-2 text-sm text-gray-800">
 						Hello! 👋
 					</div>
-					<span class="mt-1 text-xs text-gray-400">Alice · 10:00 AM</span>
 				</div>
 				<div class="flex flex-col items-end">
 					<div class="rounded-lg bg-blue-500 px-4 py-2 text-sm text-white">
-						Hi Alice!
+						Hi 🤗
 					</div>
-					<span class="mt-1 text-xs text-gray-400">You · 10:01 AM</span>
 				</div>
 			</div>
 			<div id="chat-form" class="flex items-center border-t px-4 py-3">
+				<button
+					id="refresh"
+					class="mr-1 w-24 cursor-pointer rounded-l-2xl rounded-r-lg bg-lime-200 px-4 py-2 font-bold text-emerald-600 transition-all hover:bg-lime-600 hover:text-emerald-100"
+				>
+					Refresh
+				</button>
 				<input
 					id="chat-input"
 					type="text"
 					placeholder="Type your message..."
-					class="flex-1 rounded-full border px-4 py-2 text-sm focus:border-blue-400 focus:outline-none"
+					class="flex-1 rounded-lg border border-transparent bg-sky-200 px-4 py-2 text-sm focus:border-blue-400 focus:outline-none"
 					autocomplete="off"
 				/>
 				<button
-					type="submit"
-					class="ml-3 rounded-full bg-blue-500 px-4 py-2 text-white transition hover:bg-blue-600"
+					id="send"
+					class="ml-1 w-24 cursor-pointer rounded-l-lg rounded-r-2xl bg-blue-200 px-4 py-2 font-bold text-amber-900 transition-all hover:bg-blue-500 hover:text-amber-100"
 				>
 					Send
 				</button>
